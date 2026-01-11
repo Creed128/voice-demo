@@ -1,19 +1,211 @@
 <!doctype html>
 <html lang="de">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Anna – KI-Reservierungsassistent (Demo)</title>
-  </head>
-  <body style="font-family: Arial, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 16px;">
-    <h2>KI-Reservierungsassistent „Anna“ – Demo</h2>
-    <p>
-      Testen Sie unseren KI-Reservierungsassistenten. Sie können Verfügbarkeiten prüfen und eine Reservierung anlegen.
-      <br />
-      <b>Hinweis:</b> Demo/Test – bitte keine echten personenbezogenen Daten verwenden.
-    </p>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anna – KI-Reservierungsassistent (Demo)</title>
+  <meta name="description" content="Testen Sie Anna: Verfügbarkeit prüfen & Reservierung im Test-Kalender anlegen. Demo – bitte keine echten personenbezogenen Daten." />
 
-    <elevenlabs-convai agent-id="agent_2001kefq1ccdew3s05cteqnewp0x"></elevenlabs-convai>
-    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed@beta" async type="text/javascript"></script>
-  </body>
+  <!-- Open Graph (pour un rendu propre quand tu partages le lien) -->
+  <meta property="og:title" content="Anna – KI-Reservierungsassistent (Demo)" />
+  <meta property="og:description" content="Verfügbarkeit prüfen & Reservierung im Test-Kalender anlegen. Demo – keine echten personenbezogenen Daten." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root{
+      --bg: #ffffff;
+      --fg: #0b0b0f;
+      --muted: rgba(11,11,15,.65);
+      --card: rgba(0,0,0,.03);
+      --border: rgba(0,0,0,.08);
+      --shadow: 0 18px 60px rgba(0,0,0,.08);
+      --radius: 20px;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg: #0b0b0f;
+        --fg: #f5f5f7;
+        --muted: rgba(245,245,247,.65);
+        --card: rgba(255,255,255,.06);
+        --border: rgba(255,255,255,.12);
+        --shadow: 0 18px 60px rgba(0,0,0,.35);
+      }
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.45;
+    }
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+    header{
+      padding: 18px 0 10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .badge{
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--card);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .hero{
+      margin-top: 20px;
+      padding: 26px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--card), transparent);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.02em;
+    }
+    p{
+      margin: 10px 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    @media (min-width: 860px){
+      .grid{ grid-template-columns: 1.1fr .9fr; }
+    }
+    .card{
+      padding: 18px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 18px;
+    }
+    .card h2{
+      margin: 0 0 8px;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+    ul{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    li{ margin: 8px 0; }
+    .cta{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .btn{
+      appearance:none;
+      border: 1px solid var(--border);
+      background: var(--fg);
+      color: var(--bg);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+    }
+    .btn.secondary{
+      background: transparent;
+      color: var(--fg);
+    }
+    .small{
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    footer{
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align:center;
+    }
+    /* optionnel: laisser un peu d’espace en bas pour le widget */
+    .spacer{ height: 18px; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="badge">KI-Reservierungsassistent · Demo</div>
+      <div class="badge">Deutsch · Europe/Berlin</div>
+    </header>
+
+    <section class="hero">
+      <h1>„Anna“ – KI-Reservierungsassistent (Demo)</h1>
+      <p>
+        Testen Sie eine realistische Telefon-/Chat-Reservierung: Verfügbarkeit prüfen und Reservierung im Test-Kalender anlegen.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h2>Was Anna kann</h2>
+          <ul>
+            <li>Datum, Uhrzeit & Personenzahl aufnehmen</li>
+            <li>Freie Slots vorschlagen</li>
+            <li>Reservierung anlegen (Test-Kalender)</li>
+            <li>Rückfragen: Kinderstuhl, Notizen, Wunsch</li>
+          </ul>
+
+          <div class="cta">
+            <button class="btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'});">
+              Demo starten
+            </button>
+            <a class="btn secondary" href="mailto:contact@iaflowstudio.com">
+              Kontakt
+            </a>
+          </div>
+
+          <div class="small">
+            Hinweis: Demo – bitte keine echten personenbezogenen Daten verwenden.
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>So testen Sie</h2>
+          <ul>
+            <li>Klicken Sie unten rechts auf „Start a call“ oder „Start a chat“</li>
+            <li>Sagen Sie z. B.: „Morgen, 4 Personen, 19 Uhr“</li>
+            <li>Bestätigen Sie am Ende die Buchung</li>
+          </ul>
+          <div class="small">
+            Tipp: Wenn die Öffnungszeit überschritten ist, schlägt Anna Alternativen vor.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="spacer"></div>
+
+    <footer>
+      © Demo · KI-Reservierungsassistent · Powered by ElevenLabs + n8n
+    </footer>
+  </div>
+
+  <!-- ElevenLabs ConvAI Widget -->
+  <elevenlabs-convai agent-id="agent_2001kefq1ccdew3s05cteqnewp0x"></elevenlabs-convai>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed@beta" async type="text/javascript"></script>
+</body>
 </html>
